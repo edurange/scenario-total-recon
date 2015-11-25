@@ -28,6 +28,7 @@ Graduated Recon Port Scanning Scenario
  - Bonus
  - iptables of Venusville is configured to block hosts which scan the address
  - stealth scan Venusville, then ssh there
+ - http://www.cyberciti.biz/faq/linux-detect-port-scan-attacks/
 
 7. Last_Resort
  - TBD
