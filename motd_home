@@ -19,8 +19,8 @@ troubling place where the govenor is fighting a group of rebles while searching 
 day you see an ad for a place called Rekall which offers a memory implanted vacation and you decide this could be
 the thing that will help you sleep better.
 
-The next day you arrive at Rekall but can't find an obvious door inside. Your first task is to enter into Recon 
-it's IP Address is 10.0.0.4 although it's entry point is unusual.
+The next day you arrive at Rekall but can't find an obvious door inside. Your first task is to enter into Rekall 
+it's IP Address is 10.0.0.4 although it's port is unusual.
 
 Helpful commands: nmap
                                                                                                                  
