@@ -15,6 +15,7 @@ Graduated Recon Port Scanning Scenario
 
 3. Warehouse
  - Look for a host on the subnet that is blocking pings -- ssh to that host
+ - Not exactly working as intended - ssh port shows up clearly, although ping -is- blocked
 
 4. Earth_Aerospace_Port
  - Fast scan the subnet for 10.10.0.110/17 -- ssh to the first host
@@ -37,3 +38,12 @@ Graduated Recon Port Scanning Scenario
  - TBD
 
 9. Control_Room
+
+Additional hosts:
+ - Steath_Fin
+ - Stealth_Null
+ - Stealth_Xmas
+The goal with these hosts is to see which stealth scans are blocked.
+Idealy, these hosts should only be scannable from one host.
+
+
