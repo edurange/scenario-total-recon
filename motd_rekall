@@ -19,7 +19,8 @@ you're in danger. Can you find your way to the subway? With your memory so fuzzy
 you had better get a sense of your surroundings.
 
 Try scanning the subnet 10.0.0.0/24 to see what's around you. You'll find the subway
-on the host with an open webserver. Good luck!
+on the host with an open webserver. The ssh user and password is the same as this
+host. Good luck!
 
 Helpful commands: nmap
 
