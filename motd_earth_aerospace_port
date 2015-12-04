@@ -8,10 +8,18 @@
                                                        |_|                                         
 
 While you are waiting for your space flight to mars, you look through your suitcase for more clues
-about your identity. 
+about your identity. In your suitcase, you find a holographic recording of... you. You hear
+yourself say that worked for the Agency, the shadowy enforcer of the evil corporate authority
+on mars. Then, learning some secret, you switched sides and joined the rebel freedom fighters.
+The Agency wiped your mind and sent you to earth. Looks like you have unfinished business back on
+mars...
 
+(Bonus) You might find it useful to remove the tracking device in your head. Look for clues to the 
+password in your home directory. You'll know when you find it.
 
-
+Using your super spy skills, you steal a ship and head to mars. As you fly close, you run into
+a problem. You need the right landing coordinates for the mars aerospace port, but the planet is huge.
+Scan the subnet 10.0.192.0/18 to find your landing port. The IP ends in 33.
 
        ____,----._
    ,--'| _|" o;.  `.____        ____  ,,=====._
@@ -20,3 +28,10 @@ about your identity.
  `=| :;|  | ,: o  `-_/``,-`====.}___/\\       _,
    `--.|__|_ .:  _,' """              ``=====''
        ~  ~`----'
+
+You'll need a fast scan to search through a mars-sized network!
+
+Helpful commands: nmap, ssh
+
+***********************************************************************************
+***********************************************************************************
