@@ -1,1 +1,24 @@
+***********************************************************************************
+***********************************************************************************
 
+.______       _______  __  ___      ___       __       __          __  .__   __.   ______    
+|   _  \     |   ____||  |/  /     /   \     |  |     |  |        |  | |  \ |  |  /      |   
+|  |_)  |    |  |__   |  '  /     /  ^  \    |  |     |  |        |  | |   \|  | |  ,----'   
+|      /     |   __|  |    <     /  /_\  \   |  |     |  |        |  | |  . `  | |  |        
+|  |\  \----.|  |____ |  .  \   /  _____  \  |  `----.|  `----.   |  | |  |\   | |  `----.__ 
+| _| `._____||_______||__|\__\ /__/     \__\ |_______||_______|   |__| |__| \__|  \______(__)
+
+You're in luck; you found a way in. You're directed to a chair and strapped down.
+Selecting a beautiful dream for implantation, you prepare for a much earned vacation.
+But wait! Something's wrong... You break into a violent rage, screaming about your
+blown cover and the deaths of your men! The director of ReKall Inc. tries to calm you,
+but you yell "My name is not Quaid!".
+
+You wake up in a cab, with your memory fuzzy. What happened? You get the sense that
+you're in danger. Can you find your way to the subway? With your memory so fuzzy,
+you had better get a sense of your surroundings.
+
+Try scanning the subnet 10.0.0.0/24 to see what's around you. You'll find the subway
+on the host with an open webserver. Good luck!
+
+Helpful commands: nmap
