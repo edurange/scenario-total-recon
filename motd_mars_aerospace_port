@@ -77,6 +77,9 @@
 
 Welcome to Mars. Seem familiar...?
 
+Find the host whose IP ends is .64 -- The default ssh port has been changed to an
+arbitrary port. The login credentials are the same. Look carefully, and don't be
+fooled by misdirection -- any port can be configured to be an ssh port.
 ***********************************************************************************
 ***********************************************************************************
 
