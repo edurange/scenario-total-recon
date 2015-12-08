@@ -1,1 +1,26 @@
+***********************************************************************************
+***********************************************************************************
 
+Last_Resort
+
+nmap sure is a great tool.
+
+It really makes port scanning nice and easy.
+
+Port scanning would be really hard without nmap.
+
+Point your scans at 10.0.234.8 -- ssh to the only port open
+
+
+
+Helpful commands: nmap (you wish), nc, man nc
+
+If you need some help, try here under the section 'Port Scanner':
+http://www.g-loaded.eu/2006/11/06/netcat-a-couple-of-useful-examples/
+
+
+
+
+
+***********************************************************************************
+***********************************************************************************
