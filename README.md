@@ -15,27 +15,26 @@ Graduated Recon Port Scanning Scenario
 
 3. Warehouse
  - Look for a host on the subnet that is blocking pings -- ssh to that host
- - Not exactly working as intended - ssh port shows up clearly, although ping -is- blocked
 
 4. Earth_Aerospace_Port
- - Fast scan the subnet for 10.10.0.110/17 -- ssh to the first host
+ - Fast scan the subnet for 10.0.192.0/18 -- ssh to the first host that ends in 33
 
 #### Mars Subnet
 
 5. Mars_Aerospace_Port
- - Non-standard port scan (high port)
+ - Venusville's ssh port is open, but it's been changed to an arbitrary port (123)
+ - The default port won't show up on a basic nmap scan, but other misleading ports will
 
 6. Venusville
- - Bonus
- - iptables of Venusville is configured to block hosts which scan the address
- - stealth scan Venusville, then ssh there
- - http://www.cyberciti.biz/faq/linux-detect-port-scan-attacks/
+ - Non-standard port scan (high port) -- 2345
 
 7. Last_Resort
- - TBD
+ - Portscan without nmap -- use nc
+ - http://www.g-loaded.eu/2006/11/06/netcat-a-couple-of-useful-examples/
+
   
 8. Resistance_Base
- - TBD
+ - Learn about stealth scans here! Figure out which types of scans work on which hosts!
 
 9. Control_Room
 
