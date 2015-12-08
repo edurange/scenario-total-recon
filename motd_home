@@ -12,15 +12,14 @@
     |  |     |  `--'  |     |  |     /  _____  \  |  `----.   |  |\  \----.|  |____ |  `----.|  `--'  | |  |\   | 
     |__|      \______/      |__|    /__/     \__\ |_______|   | _| `._____||_______| \______| \______/  |__| \__|
 
-Your name is Quaid and you have been having troubling vivid reaccuring dreams of Mars. Your spouse doesn't think
-much of your dreams and tells you to stop worrying about them but you can't besides who would dream of Mars a
-troubling place where the govenor is fighting a group of rebles while searching for a rumored alien artifact. One
-day you see an ad for a place called Rekall which offers a memory implanted vacation and you decide this could be
-the thing that will help you sleep better. Your best friend Harry tells you this is a bad idea, but what does
-Harry know?
+Your name is Quaid. You have been having troubling reaccuring dreams of Mars. Your spouse doesn't think tells you to 
+stop worrying about them but you can't shake how real they feel. In your dreams, Mars a troubling place where the 
+governor is fighting a group of rebels -- while both search for a rumored alien artifact. One day you see an ad for 
+a place called Rekall which offers a memory implanted vacation. That sounds fun, perhaps it could help you sleep
+better? Your best friend Harry tells you this is a bad idea, a really bad idea, but what does Harry know?
 
 The next day you arrive at Rekall but can't find an obvious door inside. Your first task is to enter into Rekall 
-it's IP Address is 10.0.0.4 although it's port is unusual.
+it's IP Address is 10.0.0.4 although it's port is unusual. Be careful, it could be dangerous.
 
 Helpful commands: nmap
 
