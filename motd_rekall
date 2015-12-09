@@ -33,7 +33,7 @@ Try scanning the subnet 10.0.0.0/24 to see what's around you. You'll find the su
 on the host with an open webserver. The ssh user and password is the same as this
 host. Good luck!
 
-Helpful commands: nmap
+Helpful commands: nmap, ssh, ifconfig, man
 
 ***********************************************************************************
 ***********************************************************************************
