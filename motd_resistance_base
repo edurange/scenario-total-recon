@@ -18,7 +18,6 @@ take much to figure out when this kind of scan is occuring.
 
 To have a better chance of scanning undetected, it is better to use FIN, Null and 
 Xmas Tree Scans. 
-
                                  |L   
                                 ,' `  
                                /.o `,    
@@ -36,8 +35,6 @@ Xmas Tree Scans.
                        /..-(_)' |','..-`(_)-`
                                 |  |        
                               --'  `--
-
-
 The hosts in the range 10.0.233.34 - 38 have been configured to block some, but not all
 stealth scans. Which scans work on which hosts?
 
@@ -46,13 +43,6 @@ To learn how to use these stealth scans, check out the man page or this helpful 
 https://nmap.org/bennieston-tutorial/ 
 
 When you're done with that, head over to the Control Room -- the IP ends in .3
-
-
-
-
-
-
-
 
 ***********************************************************************************
 ***********************************************************************************
