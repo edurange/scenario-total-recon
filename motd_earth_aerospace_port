@@ -28,7 +28,7 @@ Scan the subnet 10.0.192.0/18 to find your landing port. The IP ends in 33.
 
 You'll need a fast scan to search through a mars-sized network!
 
-Helpful commands: nmap, ssh
+Helpful commands: man, nmap, ssh
 
 ***********************************************************************************
 ***********************************************************************************
