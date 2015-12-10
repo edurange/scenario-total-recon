@@ -14,9 +14,6 @@ on mars. Then, learning some secret, you switched sides and joined the rebel fre
 The Agency wiped your mind and sent you to earth. Looks like you have unfinished business back on
 mars...
 
-(Bonus) You might find it useful to remove the tracking device in your head. Look for clues to the 
-password in your home directory. You'll know when you find it.
-
 Using your super spy skills, you steal a ship and head to mars. As you fly close, you run into
 a problem. You need the right landing coordinates for the mars aerospace port, but the planet is huge.
 Scan the subnet 10.0.192.0/18 to find your landing port. The IP ends in 33.
@@ -31,7 +28,7 @@ Scan the subnet 10.0.192.0/18 to find your landing port. The IP ends in 33.
 
 You'll need a fast scan to search through a mars-sized network!
 
-Helpful commands: nmap, ssh
+Helpful commands: man, nmap, ssh
 
 ***********************************************************************************
 ***********************************************************************************

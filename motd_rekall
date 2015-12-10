@@ -14,6 +14,17 @@ But wait! Something's wrong... You break into a violent rage, screaming about yo
 blown cover and the deaths of your men! The director of ReKall Inc. tries to calm you,
 but you yell "My name is not Quaid!".
 
+     _---~~(~~-_.
+     _{        )   )
+   ,   ) -~~- ( ,-' )_
+  (  `-,_..`., )-- '_,)
+ ( ` _)  (  -~( -_ `,  }
+ (_-  _  ~_-~~~~`,  ,' )
+   `~ -^(    __;-,((()))
+         ~~~~ {_ -_(())
+                `\  }
+                  { }
+
 You wake up in a cab, with your memory fuzzy. What happened? You get the sense that
 you're in danger. Can you find your way to the subway? With your memory so fuzzy,
 you had better get a sense of your surroundings.
@@ -22,7 +33,7 @@ Try scanning the subnet 10.0.0.0/24 to see what's around you. You'll find the su
 on the host with an open webserver. The ssh user and password is the same as this
 host. Good luck!
 
-Helpful commands: nmap
+Helpful commands: nmap, ssh, ifconfig, man
 
 ***********************************************************************************
 ***********************************************************************************
