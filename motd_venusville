@@ -22,9 +22,13 @@
                    >_ /\ _<,
                      '  '
 
-Your next host is the one that ends in .144
+VenusVille is a very strange place. The radiation on Mars is harsh, and causes inumerable mutations
+in the local population. It's all so strange yet so familiar... Using your spy instincts, you manage to
+befriend a local taxi driver named Benny. He convinces you that you need to go to the Last Resort,
+a bar here in town. You know that the Last Resort has an IP that ends in .144, but like most places 
+around here, is only accessible via a secret entrance.
 
-ssh to the only port open
+You can ssh in on the only port open.
 
 Helpful commands: man, nmap, ssh -p port_number user@ip_address
 
