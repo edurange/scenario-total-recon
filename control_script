@@ -2,7 +2,7 @@
 # This is a script to be put in every users home directory, in the folder
 # ~/reactor/.secret/
 
-control_user=$(cat user)
+control_user=$1
 
 echo "test test $control_user" >> /home/$control_user/.cron_test
 
