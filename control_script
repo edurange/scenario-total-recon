@@ -3,6 +3,12 @@
 # ~/reactor/.secret/
 
 control_user=$1
+countdown=$(cat /home/$control_user/reactor/.secret/countdown)
+if [ $countdown -lt 1 ]; then
+	echo "you fucked up you're dead" > /home/$control_user/BOOM
+else
+	echo $((countdown - 1)) > /home/$control_user/reactor/.secret/countdown
+fi
 
-echo "test test $control_user" >> /home/$control_user/.cron_test
+#echo "test test $control_user" >> /home/$control_user/.cron_test
 
