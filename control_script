@@ -2,10 +2,18 @@
 # This is a script to be put in every users home directory, in the folder
 # ~/reactor/.secret/
 
+# The first argument should be the user
 control_user=$1
+
+#countdown and reactor_state variables should be read from files in the directory
 countdown=$(cat /home/$control_user/reactor/.secret/countdown)
+reactor_state=$(cat /home/$control_user/reactor/reactor_state
 if [ $countdown -lt 1 ]; then
-	echo "you fucked up you're dead" > /home/$control_user/BOOM
+	if [ $reactor_state = "ON" ]; then
+		echo "you win! Mars is saved!" > /home/$control_user/SAVE	
+	else
+		echo "you fucked up you're dead" > /home/$control_user/BOOM
+	fi
 else
 	echo $((countdown - 1)) > /home/$control_user/reactor/.secret/countdown
 fi
