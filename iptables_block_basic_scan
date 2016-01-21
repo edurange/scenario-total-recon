@@ -1,0 +1,11 @@
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination 
+DROP       tcp  --  anywhere             anywhere             tcp dpt:https
+DROP       icmp --  anywhere             anywhere             icmp echo-request
+DROP       tcp  --  anywhere             anywhere             tcp dpt:http
+
+
+-Commands:
+
+sudo iptables -I INPUT -p tcp --destination-port 443 -j DROP
+sudo iptables -I INPUT -p tcp --destination-port 80 -j DROP
