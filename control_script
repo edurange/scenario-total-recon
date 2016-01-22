@@ -7,7 +7,7 @@ control_user=$1
 
 #countdown and reactor_state variables should be read from files in the directory
 countdown=$(cat /home/$control_user/reactor/.secret/countdown)
-reactor_state=$(cat /home/$control_user/reactor/reactor_state
+reactor_state=$(cat /home/$control_user/reactor/reactor_state)
 if [ $countdown -lt 1 ]; then
 	if [ $reactor_state = "ON" ]; then
 		echo "you win! Mars is saved!" > /home/$control_user/SAVE	
