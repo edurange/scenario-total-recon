@@ -18,14 +18,14 @@ lose_message="As the air is rushing out of the cracked glass, you try to pull yo
 
 if [ $countdown -lt 1 ]; then
 	if [ $reactor_state = "ON" ]; then
-		if [ -e /home/$control_user/SAVE]; then
+		if [ -e /home/$control_user/SAVE ]; then
 			:
 		else
 			write $control_user <<< $win_message
 		fi
 		echo "You win! Mars is saved!" > /home/$control_user/SAVE
 	else
-		if [ -e /home/$control_user/BOOM]; then
+		if [ -e /home/$control_user/BOOM ]; then
 			:
 		else
 			write $control_user <<< $lose_message
