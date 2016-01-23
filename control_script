@@ -30,7 +30,7 @@ if [ $countdown -lt 1 ]; then
 		else
 			write $control_user <<< $lose_message
 		fi	
-		echo "You fucked up you're dead" > /home/$control_user/BOOM
+		echo "You messed up you're dead" > /home/$control_user/BOOM
 	fi
 else
 	echo $((countdown - 1)) > /home/$control_user/reactor/.secret/countdown
