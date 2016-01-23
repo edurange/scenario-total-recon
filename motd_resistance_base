@@ -29,10 +29,13 @@ The hosts in the range 10.0.233.34 - 38 are your targets. You need to scan them 
 undetected. Not every scan type will work on each host. Figuring which hosts block which
 scans will help the resistance gain the valuable information they need.
 
-To learn how to use these stealth scans, check out the man page or this helpful tutorial:
-https://nmap.org/bennieston-tutorial/ 
-
-When you're done with that, make your way to the Reactor Control Room -- the IP ends in .3
+After you've helped the Resistance gain valuable intel on their targets, you're ready for the
+final struggle. The information you've obtained indicates that the corporate authority has
+kept secret its terriforming technology. They have a secret reactor which could transform the Martian
+atmosphere into breathable air. The people of mars would no longer rely the Mars corporation.
+You must find the reactor and turn it on. 
+ 
+Find the Reactor Control Room -- the IP ends in .3, but the entrance is hidden among many decoys...
 
 ***********************************************************************************
 ***********************************************************************************
