@@ -27,7 +27,8 @@ script "reactor_control" do
   echo "* * * * * root for a_home  in \\$(ls /home/); do /home/\\$a_home/reactor/.secret/control_script \\$a_home; done" > /etc/cron.d/each_home_control
   mkdir /look-in-here
   mv /bin/chmod /look-in-here/chmod
-  echo "echo 5 > ~/reactor/countdown;if [ -e ~/reactor/BOOM ]; then rm ~/reactor/BOOM;done" >> /etc/bash.bashrc
+  echo "echo 5 > ~/reactor/.secret/countdown;if [ -e ~/BOOM ]; then rm -f ~/BOOM;fi" >> /etc/bash.bashrc
+  echo "alias chmod='chmod;echo It looks like someone moved chmod... I wonder where it is...'" >> /etc/bash.bashrc
   EOH
   not_if "test -e /tmp/install_control-done"
 end

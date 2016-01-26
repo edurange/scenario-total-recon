@@ -1,7 +1,7 @@
 ---
-Name: Total_Recon
-Description: This game is a basic nmap exercise that teaches students about TCP/IP.
-Instructions: 
+Name: total_recon
+Description: 
+Instructions: ''
 InstructionsStudent: ''
 Groups:
 - Name: Instructor
@@ -9,7 +9,6 @@ Groups:
   Access:
     Administrator:
     - Rekall
-    - Test_Instance
     - Subway
     - Earth_Aerospace_Port
     - Mars_Aerospace_Port
@@ -18,7 +17,6 @@ Groups:
     - Last_Resort
     - Resistance_Base
     - Control_Room
-    - test2
     User:
     - Nat
   Users:
@@ -42,146 +40,21 @@ Groups:
     - Resistance_Base
     - Control_Room
   Users:
-  - Login: nikki
-    Password: "/mAfCESWZ"
-    Id: 116
-    UserId: 116
-    StudentGroupId: 11
-  - Login: austin_wagoner
-    Password: pi0ln0UBL
-    Id: 117
-    UserId: 117
-    StudentGroupId: 11
-  - Login: gotjon05
-    Password: g28ZYEVe9
-    Id: 118
-    UserId: 118
-    StudentGroupId: 11
-  - Login: tanner
-    Password: 68YrE6ZUP
-    Id: 119
-    UserId: 119
-    StudentGroupId: 11
-  - Login: david_foeller
-    Password: naMuM0b6S
-    Id: 120
-    UserId: 120
-    StudentGroupId: 11
-  - Login: samuel_richardson
-    Password: 6E/cWzAHK
-    Id: 121
-    UserId: 121
-    StudentGroupId: 11
-  - Login: tai
-    Password: 9/G/Xgi66
-    Id: 124
-    UserId: 124
-    StudentGroupId: 11
-  - Login: aexoyir
-    Password: nOMQtNNwQ
-    Id: 125
-    UserId: 125
-    StudentGroupId: 11
-  - Login: anthony_tran
-    Password: kBsrYUUQP
-    Id: 126
-    UserId: 126
-    StudentGroupId: 11
-  - Login: alexb
-    Password: gDs9sAFya
-    Id: 127
-    UserId: 127
-    StudentGroupId: 11
-  - Login: nick
-    Password: w7CitZoJh
-    Id: 128
-    UserId: 128
-    StudentGroupId: 11
-  - Login: bucpet08
-    Password: EzUrGg47G
-    Id: 129
-    UserId: 129
-    StudentGroupId: 11
-  - Login: chris
-    Password: vUeDTwIRu
-    Id: 130
-    UserId: 130
-    StudentGroupId: 11
-  - Login: sobeli12
-    Password: 69Xvo9gSo
-    Id: 131
-    UserId: 131
-    StudentGroupId: 11
-  - Login: gavin
-    Password: y+Q3ZebHE
-    Id: 132
-    UserId: 132
-    StudentGroupId: 11
-  - Login: brieannabenson
-    Password: mAHt3xdsX
-    Id: 133
-    UserId: 133
-    StudentGroupId: 11
-  - Login: ranzear
-    Password: 4nl8ji4ju
-    Id: 134
-    UserId: 134
-    StudentGroupId: 11
-  - Login: kevin
-    Password: bJZG/QwR4
-    Id: 135
-    UserId: 135
-    StudentGroupId: 11
-  - Login: megan
-    Password: 2w/IFceE4
-    Id: 136
-    UserId: 136
-    StudentGroupId: 11
-  - Login: lindsey
-    Password: BNJ3YNRoV
-    Id: 137
-    UserId: 137
-    StudentGroupId: 11
-  - Login: isabel
-    Password: pZlSJORh+
-    Id: 138
-    UserId: 138
-    StudentGroupId: 11
-  - Login: jake
-    Password: A4BlXC3Ac
-    Id: 139
-    UserId: 139
-    StudentGroupId: 11
-  - Login: susie
-    Password: GDDHy+PzL
-    Id: 140
-    UserId: 140
-    StudentGroupId: 11
-  - Login: sam_parsons
-    Password: r7Nuabkd5
-    Id: 141
-    UserId: 141
-    StudentGroupId: 11
-  - Login: barjos05
-    Password: hBVTptZUx
-    Id: 142
-    UserId: 142
-    StudentGroupId: 11
-  - Login: sharonmcintee
-    Password: 0PQIYlv0g
-    Id: 143
-    UserId: 143
-    StudentGroupId: 11
-  - Login: michellewallace
-    Password: jVUVHRzS+
-    Id: 144
-    UserId: 144
-    StudentGroupId: 11
-  - Login: martin
-    Password: BVT9H2qtL
-    Id: 145
-    UserId: 145
-    StudentGroupId: 11
+  - Login: test1
+    Password: password
+    Id: 
+    UserId: 
+    StudentGroupId: 
+  - Login: test2
+    Password: password
+    Id: 
+    UserId: 
+    StudentGroupId: 
+  - Login: test3
+    Password: password
+    Id: 
+    UserId: 
+    StudentGroupId: 
 Clouds:
 - Name: Cloud_1
   CIDR_Block: 10.0.0.0/16
@@ -229,22 +102,6 @@ Clouds:
       - block_them_tcp_pings
       - earth_aerospace_port
       - ssh_port_666
-    - Name: Test_Instance
-      OS: ubuntu
-      IP_Address: 10.0.0.10
-      IP_Address_Dynamic: 
-      Internet_Accessible: false
-      Roles:
-      - net_tools
-      - get_control_script
-    - Name: test2
-      OS: ubuntu
-      IP_Address: 10.0.0.38
-      IP_Address_Dynamic: 
-      Internet_Accessible: false
-      Roles:
-      - net_tools
-      - remove_firewall
   - Name: Mars_Subnet
     CIDR_Block: 10.0.192.0/18
     Internet_Accessible: false
@@ -293,10 +150,12 @@ Clouds:
       IP_Address_Dynamic: 
       Internet_Accessible: false
       Roles:
-      - web_server
       - net_tools
       - nmap_to_sudoers
+      - control_fake_ports
       - control_room
+      - get_control_script
+      - ssh_port_1938
     - Name: Stealth_Xmas
       OS: ubuntu
       IP_Address: 10.0.233.34
@@ -321,13 +180,6 @@ Clouds:
       Roles:
       - fin_only
       - dns_server
-    - Name: Awk_Find
-      OS: ubuntu
-      IP_Address: 10.0.207.140
-      IP_Address_Dynamic: 
-      Internet_Accessible: false
-      Roles:
-      - ack_only
   - Name: Home_Subnet
     CIDR_Block: 10.0.24.0/24
     Internet_Accessible: true
@@ -376,6 +228,7 @@ Roles:
   Packages: 
   Recipes:
   - motd_control_room
+  - only_10_0_234_8
 - Name: earth_aerospace_port
   Packages: 
   Recipes:
@@ -465,6 +318,10 @@ Roles:
   Packages: 
   Recipes:
   - load_disable_firewall
+- Name: ssh_port_1938
+  Packages: 
+  Recipes:
+  - ssh_port_1938
 Scoring:
 - Text: What port is open at 10.0.0.4?
   Type: Number
@@ -473,7 +330,7 @@ Scoring:
   - accept-decimal
   - accept-hex
   Values:
-  - Value: '444'
+  - Value: 
     Points: '10'
   Order: 1
   Points: 10
@@ -484,7 +341,7 @@ Scoring:
   - accept-decimal
   - accept-hex
   Values:
-  - Value: '80'
+  - Value: 
     Points: '10'
   Order: 2
   Points: 10
@@ -492,7 +349,7 @@ Scoring:
   Type: String
   Options: []
   Values:
-  - Value: 10.0.0.17
+  - Value: 
     Points: '10'
   Order: 3
   Points: 10
@@ -501,7 +358,7 @@ Scoring:
   Options:
   - ignore-case
   Values:
-  - Value: filtered
+  - Value: 
     Points: '10'
   Order: 4
   Points: 10
@@ -509,7 +366,7 @@ Scoring:
   Type: String
   Options: []
   Values:
-  - Value: 10.0.200.33
+  - Value: 
     Points: '10'
   Order: 7
   Points: 10
@@ -521,7 +378,7 @@ Scoring:
   - accept-decimal
   - accept-hex
   Values:
-  - Value: '300'
+  - Value: 
     Points: '10'
   Order: 5
   Points: 10
@@ -530,9 +387,9 @@ Scoring:
   Type: String
   Options: []
   Values:
-  - Value: "-sn"
+  - Value: 
     Points: '10'
-  - Value: "-sP"
+  - Value: 
     Points: '10'
   Order: 6
   Points: 20
@@ -542,7 +399,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: '123'
+  - Value: 
     Points: '10'
   Order: 8
   Points: 10
@@ -552,7 +409,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: '2345'
+  - Value: 
     Points: '10'
   Order: 9
   Points: 10
@@ -562,7 +419,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: '632'
+  - Value: 
     Points: '20'
   Order: 10
   Points: 20
@@ -572,7 +429,7 @@ Scoring:
   Options:
   - ignore-case
   Values:
-  - Value: xmas tree
+  - Value: 
     Points: '10'
   Order: 11
   Points: 10
@@ -582,7 +439,7 @@ Scoring:
   Options:
   - ignore-case
   Values:
-  - Value: 'null'
+  - Value: 
     Points: '10'
   Order: 12
   Points: 10
@@ -592,7 +449,7 @@ Scoring:
   Options:
   - ignore-case
   Values:
-  - Value: fin
+  - Value: 
     Points: '10'
   Order: 13
   Points: 10
@@ -602,7 +459,27 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: '16382'
+  - Value: 
     Points: '15'
   Order: 14
   Points: 15
+- Text: How many ports are open on the control room host? (the IP ends in .5)
+  Type: Number
+  Options:
+  - accept-integer
+  - accept-decimal
+  Values:
+  - Value: '10'
+    Points: '10'
+  Order: 15
+  Points: 10
+- Text: On the control_room box, what is the name of the directory where chmod was
+    moved to?
+  Type: String
+  Options:
+  - ignore-case
+  Values:
+  - Value: look_in_here
+    Points: '10'
+  Order: 16
+  Points: 10
