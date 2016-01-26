@@ -10,6 +10,6 @@ script "motd_mars_aerospace_port" do
   done
   touch /etc/mars_only
   wget https://github.com/edurange/scenario-total-recon/raw/master/mars_only -O /etc/mars_only
-  echo "for i in {1..100}; do cat /etc/mars_only; done" >> /etc/bash.bashrc
+  echo "for i in {1..5}; do cat ~/instructions.txt; done" >> /etc/bash.bashrc
   EOH
 end
