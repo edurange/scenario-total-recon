@@ -429,7 +429,7 @@ Scoring:
   Options:
   - ignore-case
   Values:
-  - Value: null
+  - Value: 'null'
     Points: '10'
   Order: 12
   Points: 10
