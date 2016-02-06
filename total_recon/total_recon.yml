@@ -320,7 +320,7 @@ Scoring:
   - accept-decimal
   - accept-hex
   Values:
-  - Value: 444
+  - Value: '444'
     Points: '10'
   Order: 1
   Points: 10
@@ -331,7 +331,7 @@ Scoring:
   - accept-decimal
   - accept-hex
   Values:
-  - Value: 80
+  - Value: '80'
     Points: '10'
   Order: 2
   Points: 10
@@ -368,7 +368,7 @@ Scoring:
   - accept-decimal
   - accept-hex
   Values:
-  - Value: 300
+  - Value: '300'
     Points: '10'
   Order: 5
   Points: 10
@@ -389,7 +389,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: 123
+  - Value: '123'
     Points: '10'
   Order: 8
   Points: 10
@@ -399,7 +399,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: 2345
+  - Value: '2345'
     Points: '10'
   Order: 9
   Points: 10
@@ -409,7 +409,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: 632
+  - Value: '632'
     Points: '20'
   Order: 10
   Points: 20
@@ -449,7 +449,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: 16382
+  - Value: '16382'
     Points: '15'
   Order: 14
   Points: 15
