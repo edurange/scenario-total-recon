@@ -23,9 +23,13 @@ it's IP Address is 10.0.0.4 although it's port is unusual. Be careful, it could 
 
 Helpful commands: nmap, ssh -p port_number user@ip_address
 
+
+
 Total Recon is a hacking game designed to teach network reconnaissance with the network scannning tool nmap. You
 will use nmap to learn things about other hosts on the network, and progress levels using ssh. Each machine you
 log into will use the same username and password. On each machine, cat ~/instructions.txt to see this message again.
+
+Unless otherwise noted, you will be using the same password that brought you here.
                                                                                                                  
 *****************************************************************************************************************
 *****************************************************************************************************************
