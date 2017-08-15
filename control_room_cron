@@ -4,7 +4,7 @@
 
 # This should be the cron entry in every user's crontab
 # No, this will need to be run as root, nvm
-# So in hte system crontab:
+# So in the system crontab:
 
 * * * * * root /root/countdown
 
