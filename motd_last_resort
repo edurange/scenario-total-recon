@@ -1,45 +1,47 @@
-***********************************************************************************
-***********************************************************************************
-          ╦  ┌─┐┌─┐┌┬┐  ╦═╗┌─┐┌─┐┌─┐┬─┐┌┬┐
-          ║  ├─┤└─┐ │   ╠╦╝├┤ └─┐│ │├┬┘ │ 
-          ╩═╝┴ ┴└─┘ ┴   ╩╚═└─┘└─┘└─┘┴└─ ┴ 
-                                         
-      .======================================.
-      | ___ ___ ___               _   _   _  |
-      | \_/ \_/ \_/ C|||C|||C||| |-| |-| |-| |
-      | _|_ _|_ _|_  ||| ||| ||| |_| |_| |_| |
-      '===================================== 
-                The Last Resort              
-           .:.                               
-          C|||'                               
-        ___|||______________________________  
-       [____________________________________] 
-        |   ____    ____    ____    ____   | 
-        |  (____)  (____)  (____)  (____)  | 
-        |  |    |  |    |  |    |  |    |  | 
-        |  |    |  |    |  |    |  |    |  | 
-        |  |    |  |    |  |    |  |    |  | 
-        |  |____|  |____|  |____|  |____|  |  
-        |  I====I  I====I  I====I  I====I  | 
-        |    |  |    |  |    |  |    |  | /.
-                                               
-Things don't go quite as hoped at the Last Resort. When you get there, you find a firefight has
-broken out between the rebels and the (not so) secret police. Gunshuts fly everywhere! The tide
-turns against the rebels, and you find yourself naturally fighting on their side. You defend the
-cause with all you're worth, but it comes time to cut your losses and escape. You need to find your
-way to the Resistance Base! But in the course of the battle, you've lost your spy scanning tool!
+********************************************************************************
+********************************************************************************
+                  ╦  ┌─┐┌─┐┌┬┐  ╦═╗┌─┐┌─┐┌─┐┬─┐┌┬┐
+                  ║  ├─┤└─┐ │   ╠╦╝├┤ └─┐│ │├┬┘ │
+                  ╩═╝┴ ┴└─┘ ┴   ╩╚═└─┘└─┘└─┘┴└─ ┴
+
+              .======================================.
+              | ___ ___ ___               _   _   _  |
+              | \_/ \_/ \_/ C|||C|||C||| |-| |-| |-| |
+              | _|_ _|_ _|_  ||| ||| ||| |_| |_| |_| |
+              '=====================================
+                        The Last Resort
+                   .:.
+                  C|||'
+                ___|||______________________________
+               [____________________________________]
+                |   ____    ____    ____    ____   |
+                |  (____)  (____)  (____)  (____)  |
+                |  |    |  |    |  |    |  |    |  |
+                |  |    |  |    |  |    |  |    |  |
+                |  |    |  |    |  |    |  |    |  |
+                |  |____|  |____|  |____|  |____|  |
+                |  I====I  I====I  I====I  I====I  |
+                |    |  |    |  |    |  |    |  | /.
+
+Things don't go quite as hoped at the Last Resort. When you get there, you find
+a firefight has broken out between the rebels and the (not so) secret police.
+Gunshots fly everywhere! The tide turns against the rebels, and you find
+yourself naturally fighting on their side. You defend the cause with all you're
+worth, but it comes time to cut your losses and escape. You need to find your
+way to the Resistance Base! But in the course of the battle, you've lost your
+spy scanning tool!
 
 It's gone! nmap is gone! NOOOOOOOOOO!!!
 
 Too bad. Such is a spy's luck. You'll have to make due without.
 
-Find some other way to scan the Resistance Base at 10.0.234.8 to find a a way in.
-ssh to the only port open
+Find some other way to scan the Resistance Base at 10.0.234.8 to find a a way
+in. ssh to the only port open
 
 Helpful commands: nmap (you wish), nc, man nc
 
 If you need some help, start your search here:
 https://cloud.edurange.org/tutorials/total_recon
 
-***********************************************************************************
-***********************************************************************************
+********************************************************************************
+********************************************************************************

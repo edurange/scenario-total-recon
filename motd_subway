@@ -1,14 +1,14 @@
 ***********************************************************************************
 ***********************************************************************************
-_________          _______    _______           ______            _______          
+_________          _______    _______           ______            _______
 \__   __/|\     /|(  ____ \  (  ____ \|\     /|(  ___ \ |\     /|(  ___  )|\     /|
    ) (   | )   ( || (    \/  | (    \/| )   ( || (   ) )| )   ( || (   ) |( \   / )
-   | |   | (___) || (__      | (_____ | |   | || (__/ / | | _ | || (___) | \ (_) / 
-   | |   |  ___  ||  __)     (_____  )| |   | ||  __ (  | |( )| ||  ___  |  \   /  
-   | |   | (   ) || (              ) || |   | || (  \ \ | || || || (   ) |   ) (   
-   | |   | )   ( || (____/\  /\____) || (___) || )___) )| () () || )   ( |   | |   
-   )_(   |/     \|(_______/  \_______)(_______)|/ \___/ (_______)|/     \|   \_/   
-                                                                                   
+   | |   | (___) || (__      | (_____ | |   | || (__/ / | | _ | || (___) | \ (_) /
+   | |   |  ___  ||  __)     (_____  )| |   | ||  __ (  | |( )| ||  ___  |  \   /
+   | |   | (   ) || (              ) || |   | || (  \ \ | || || || (   ) |   ) (
+   | |   | )   ( || (____/\  /\____) || (___) || )___) )| () () || )   ( |   | |
+   )_(   |/     \|(_______/  \_______)(_______)|/ \___/ (_______)|/     \|   \_/
+
 You find your way to the subway and head home, looking forward to some well-
 deserved sleep. Suddently, you're jumped by five people with guns, and the leader
 points a gun at your head. It's your best friend, Harry! Before he can pull the
@@ -24,14 +24,14 @@ waiting in an unmarked hotel room. Without another option, you go there.
 
                     ____
                .---[[__]]----.
-              ;-------------.|  
-              |             ||  
+              ;-------------.|
               |             ||
-              |             ||  
-              |_____________|/  
-                                
+              |             ||
+              |             ||
+              |_____________|/
+
 In the suitcase you find a chache of spy supplies -- guns, fake passports, currency,
-and most importantly, the secret earth-airport address, 10.0.0.55. Strange that it
+and most importantly, the secret earth-spaceport address, ${ip_address}. Strange that it
 didn't appear on your subnet scan. Could it be hidden somehow? Only your newly
 discovered spy skills can get you the truth. Find the open port and get there!
 
