@@ -60,12 +60,12 @@ output "instances" {
       ip_address_private = aws_instance.subway.private_ip
     },
     {
-      name = "earth_aerospace_port"
-      ip_address_private = aws_instance.earth_aerospace_port.private_ip
+      name = "earth_spaceport"
+      ip_address_private = aws_instance.earth_spaceport.private_ip
     },
     {
-      name = "mars_aerospace_port"
-      ip_address_private = aws_instance.mars_aerospace_port.private_ip
+      name = "mars_spaceport"
+      ip_address_private = aws_instance.mars_spaceport.private_ip
     },
     {
       name = "venusville"
@@ -309,7 +309,7 @@ data "template_cloudinit_config" "subway" {
       packages = setunion(local.net_tools, ["apache2"])
       hostname = "subway"
       motd     = templatefile("${path.module}/motd_subway", {
-        ip_address = local.earth_aerospace_port_private_ip
+        ip_address = local.earth_spaceport_private_ip
       })
     })
   }
@@ -322,12 +322,12 @@ resource "random_integer" "subway_hostnum" {
   max     = 255
 }
 
-resource "random_integer" "earth_aerospace_port_hostnum" {
+resource "random_integer" "earth_spaceport_hostnum" {
   min     = 5
   max     = 100
 }
 
-resource "random_integer" "mars_aerospace_port" {
+resource "random_integer" "mars_spaceport" {
   min     = 192
   max     = 207
 }
@@ -345,8 +345,8 @@ resource "random_integer" "last_resort" {
 locals {
   home_private_ip                 = "10.0.129.6"
   subway_private_ip               = cidrhost(aws_subnet.earth.cidr_block, random_integer.subway_hostnum.result)
-  earth_aerospace_port_private_ip = cidrhost(aws_subnet.earth.cidr_block, random_integer.earth_aerospace_port_hostnum.result)
-  mars_aerospace_port_private_ip  = "10.0.${random_integer.mars_aerospace_port.result}.33"
+  earth_spaceport_private_ip = cidrhost(aws_subnet.earth.cidr_block, random_integer.earth_spaceport_hostnum.result)
+  mars_spaceport_private_ip  = "10.0.${random_integer.mars_spaceport.result}.33"
   venusville_private_ip           = "10.0.${random_integer.venusville.result}.64"
   last_resort_private_ip          = "10.0.${random_integer.last_resort.result}.144"
   resistance_base_private_ip      = "10.0.234.8"
@@ -381,7 +381,7 @@ resource "aws_instance" "subway" {
 }
 
 
-data "template_cloudinit_config" "earth_aerospace_port" {
+data "template_cloudinit_config" "earth_spaceport" {
   gzip          = true
   base64_encode = true
 
@@ -404,8 +404,8 @@ data "template_cloudinit_config" "earth_aerospace_port" {
     content = templatefile("${path.module}/cloud-init.yml", {
       players  = var.students
       packages = setunion(local.net_tools)
-      hostname = "earth-aerospace-port"
-      motd     = file("${path.module}/motd_earth_aerospace_port")
+      hostname = "earth-spaceport"
+      motd     = file("${path.module}/motd_earth_spaceport")
     })
   }
 
@@ -444,19 +444,19 @@ data "template_cloudinit_config" "earth_aerospace_port" {
 # to determine if cloud-init succeeded.
 #
 
-resource "aws_instance" "earth_aerospace_port" {
+resource "aws_instance" "earth_spaceport" {
   subnet_id                   = aws_subnet.earth.id
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.nano"
-  private_ip                  = local.earth_aerospace_port_private_ip
+  private_ip                  = local.earth_spaceport_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
-  user_data_base64            = data.template_cloudinit_config.earth_aerospace_port.rendered
+  user_data_base64            = data.template_cloudinit_config.earth_spaceport.rendered
 
-  tags = merge(local.common_tags, { Name = "total_recon/earth_aerospace_port" })
+  tags = merge(local.common_tags, { Name = "total_recon/earth_spaceport" })
 
   # connection {
   #   bastion_host        = aws_instance.home.public_ip
@@ -474,7 +474,7 @@ resource "aws_instance" "earth_aerospace_port" {
   # }
 }
 
-data "template_cloudinit_config" "mars_aerospace_port" {
+data "template_cloudinit_config" "mars_spaceport" {
   gzip          = true
   base64_encode = true
 
@@ -497,33 +497,33 @@ data "template_cloudinit_config" "mars_aerospace_port" {
     content = templatefile("${path.module}/cloud-init.yml", {
       players  = var.students
       packages = setunion(local.net_tools)
-      hostname = "mars-aerospace-port"
-      motd     = file("${path.module}/motd_mars_aerospace_port")
+      hostname = "mars-spaceport"
+      motd     = file("${path.module}/motd_mars_spaceport")
     })
   }
 
   part {
-    filename     = "only_earth_areospace_port"
+    filename     = "only_earth_spaceport"
     content_type = "text/x-shellscript"
     content = templatefile("${path.module}/only_from", {
-      ip_addresses: [local.earth_aerospace_port_private_ip]
+      ip_addresses: [local.earth_spaceport_private_ip]
     })
   }
 }
 
-resource "aws_instance" "mars_aerospace_port" {
+resource "aws_instance" "mars_spaceport" {
   subnet_id                   = aws_subnet.mars.id
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.nano"
-  private_ip                  = local.mars_aerospace_port_private_ip
+  private_ip                  = local.mars_spaceport_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
-  user_data_base64            = data.template_cloudinit_config.mars_aerospace_port.rendered
+  user_data_base64            = data.template_cloudinit_config.mars_spaceport.rendered
 
-  tags = merge(local.common_tags, { Name = "total_recon/mars_aerospace_port" })
+  tags = merge(local.common_tags, { Name = "total_recon/mars_spaceport" })
 }
 
 
@@ -564,10 +564,10 @@ data "template_cloudinit_config" "venusville" {
   }
 
   part {
-    filename     = "only_mars_areospace_port"
+    filename     = "only_mars_spaceport"
     content_type = "text/x-shellscript"
     content = templatefile("${path.module}/only_from", {
-      ip_addresses: [local.mars_aerospace_port_private_ip]
+      ip_addresses: [local.mars_spaceport_private_ip]
     })
   }
 }
@@ -672,7 +672,9 @@ data "template_cloudinit_config" "resistance_base" {
       players  = var.students
       packages = local.net_tools
       hostname = "resistance-base"
-      motd     = file("${path.module}/motd_resistance_base")
+      motd     = templatefile("${path.module}/motd_resistance_base",{
+        resistance_base_private_ip = local.resistance_base_private_ip
+      })
     })
   }
 
@@ -691,8 +693,8 @@ data "template_cloudinit_config" "resistance_base" {
       ip_addresses: [
         local.home_private_ip,
         local.subway_private_ip,
-        local.earth_aerospace_port_private_ip,
-        local.mars_aerospace_port_private_ip,
+        local.earth_spaceport_private_ip,
+        local.mars_spaceport_private_ip,
         local.venusville_private_ip
       ]
     })
@@ -721,4 +723,44 @@ resource "aws_instance" "resistance_base" {
   user_data_base64            = data.template_cloudinit_config.resistance_base.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/resistance_base" })
+}
+
+data "template_cloudinit_config" "stealth_xmas" {
+  gzip          = true
+  base64_encode = true
+
+  part {
+    filename     = "disable_ping"
+    content_type = "text/x-shellscript"
+    content = file("${path.module}/disable_ping")
+  }
+
+  part {
+    filename     = "block_all_but_xmas"
+    content_type = "text/x-shellscript"
+    content = file("${path.module}/block_all_but_xmas")
+  }
+
+  part {
+    filename     = "ssh_port_444"
+    content_type = "text/x-shellscript"
+    content = templatefile("${path.module}/change_ssh_port", {
+      port: 444
+    })
+  }
+}
+
+resource "aws_instance" "stealth_xmas" {
+  subnet_id                   = aws_subnet.mars.id
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.nano"
+  private_ip                  = "10.0.233.34"
+  key_name                    = aws_key_pair.key.key_name
+  vpc_security_group_ids      = [
+    aws_security_group.allow_all_internal.id,
+    aws_security_group.http_egress_to_world.id
+  ]
+  user_data_base64            = data.template_cloudinit_config.stealth_xmas.rendered
+
+  tags = merge(local.common_tags, { Name = "total_recon/stealth_xmas" })
 }

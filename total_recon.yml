@@ -5,94 +5,23 @@ Description: Total Recon is a progressive, story-based game designed to teach nm
 Instructions: Instruct students to connect to the first machine, and further login
   instructions will appear onscreen once connected.
 Groups:
-- Name: Student
+- Name: Students
   Instructions: Login to Home. Further instructions will be displayed upon logging in to home and each new checkpoint.
+  Access:
+  - Instance: home
 Instances:
 - Name: home
 - Name: rekall
 - Name: subway
-- Name: earth_aerospace_port
-- Name: mars_aerospace_port
+- Name: earth_spaceport
+- Name: mars_spaceport
 - Name: venusville
 - Name: last_resort
 - Name: resistance_base
 - Name: control_room
-  IP_Address: 10.0.250.5
-  Roles:
-  - net_tools
-  - nmap_to_sudoers
-  - control_fake_ports
-  - control_room
-  - get_control_script
-  - ssh_port_1938
 - Name: stealth_xmas
-  IP_Address: 10.0.233.34
-  Roles:
-  - xmas_tree_only
-  - ssh_port_444
 - Name: stealth_null
-  IP_Address: 10.0.233.36
-  Roles:
-  - null_only
-  - web_server
 - Name: stealth_fin
-  OS: ubuntu
-  IP_Address: 10.0.233.38
-  Internet_Accessible: false
-  Roles:
-  - fin_only
-  - dns_server
-Roles:
-- Name: control_room
-  Packages:
-  Recipes:
-  - motd_control_room
-  - only_10_0_234_8
-- Name: earth_aerospace_port
-  Packages:
-  Recipes:
-  - motd_earth_aerospace_port
-  - only_10_0_0_17
-- Name: xmas_tree_only
-  Packages:
-  Recipes:
-  - disable_ping
-  - block_all_but_xmas
-- Name: null_only
-  Packages:
-  Recipes:
-  - block_all_but_null
-  - disable_ping
-- Name: fin_only
-  Packages:
-  Recipes:
-  - disable_ping
-  - block_all_but_fin
-- Name: block_them_tcp_pings
-  Packages:
-  Recipes:
-  - block_80_and_443
-- Name: ack_only
-  Packages:
-  Recipes:
-  - block_all_but_ack
-  - disable_ping
-- Name: get_control_script
-  Packages:
-  Recipes:
-  - reactor_control
-- Name: control_fake_ports
-  Packages:
-  Recipes:
-  - control_fake_ports
-- Name: remove_firewall
-  Packages:
-  Recipes:
-  - load_disable_firewall
-- Name: ssh_port_1938
-  Packages:
-  Recipes:
-  - ssh_port_1938
 Scoring:
 - Text: What port is open at 10.0.0.4?
   Type: Number
@@ -109,8 +38,6 @@ Scoring:
   Type: Number
   Options:
   - accept-integer
-  - accept-decimal
-  - accept-hex
   Values:
   - Value: '80'
     Points: '10'
@@ -120,11 +47,11 @@ Scoring:
   Type: String
   Options: []
   Values:
-  - Value: 10.0.0.17
+  - Value: "${scenario.instances.subway.ip_address_private}"
     Points: '10'
   Order: 3
   Points: 10
-- Text: On the host 10.0.0.55, what is the state of ports 80 and 443?
+- Text: What is the state of ports 80 and 443 on the earth-spaceport host?
   Type: String
   Options:
   - ignore-case
@@ -133,11 +60,11 @@ Scoring:
     Points: '10'
   Order: 4
   Points: 10
-- Text: What is the IP Address of the mars aerospace port? (It ends in .33)
+- Text: What is the IP Address of the mars spaceport? (It ends in .33)
   Type: String
   Options: []
   Values:
-  - Value: 10.0.200.33
+  - Value: "${scenario.instances.mars_spaceport.ip_address_private}"
     Points: '10'
   Order: 7
   Points: 10
