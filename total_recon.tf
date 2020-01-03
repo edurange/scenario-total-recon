@@ -180,6 +180,7 @@ data "template_cloudinit_config" "home" {
       packages = local.net_tools
       hostname = "home"
       motd     = file("${path.module}/motd_home")
+      ip_addresses = []
     })
   }
 }
@@ -206,10 +207,21 @@ resource "aws_instance" "home" {
     user        = "ubuntu"
     private_key = tls_private_key.key.private_key_pem
   }
-
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
   provisioner "remote-exec" {
     inline = [
       "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "rm -rf /home/ubuntu/recon"
     ]
   }
 }
@@ -240,6 +252,7 @@ data "template_cloudinit_config" "rekall" {
       packages = local.net_tools
       hostname = "rekall"
       motd     = file("${path.module}/motd_rekall")
+      ip_addresses = []
     })
   }
 
@@ -277,9 +290,21 @@ resource "aws_instance" "rekall" {
     private_key         = tls_private_key.key.private_key_pem
   }
 
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
   provisioner "remote-exec" {
     inline = [
       "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "rm -rf /home/ubuntu/recon"
     ]
   }
 }
@@ -308,6 +333,7 @@ data "template_cloudinit_config" "subway" {
       players  = var.students
       packages = setunion(local.net_tools, ["apache2"])
       hostname = "subway"
+      ip_addresses = []
       motd     = templatefile("${path.module}/motd_subway", {
         ip_address = local.earth_spaceport_private_ip
       })
@@ -373,9 +399,21 @@ resource "aws_instance" "subway" {
     private_key         = tls_private_key.key.private_key_pem
   }
 
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
   provisioner "remote-exec" {
     inline = [
       "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "rm -rf /home/ubuntu/recon"
     ]
   }
 }
@@ -406,6 +444,7 @@ data "template_cloudinit_config" "earth_spaceport" {
       packages = setunion(local.net_tools)
       hostname = "earth-spaceport"
       motd     = file("${path.module}/motd_earth_spaceport")
+      ip_addresses = [local.subway_private_ip]
     })
   }
 
@@ -429,13 +468,13 @@ data "template_cloudinit_config" "earth_spaceport" {
     })
   }
 
-  part {
-    filename     = "only_subway"
-    content_type = "text/x-shellscript"
-    content = templatefile("${path.module}/only_from", {
-      ip_addresses: [local.subway_private_ip]
-    })
-  }
+  #part {
+  #  filename     = "only_subway"
+  #  content_type = "text/x-shellscript"
+  #  content = templatefile("${path.module}/only_from", {
+  #    ip_addresses: [local.subway_private_ip]
+  #  })
+  #}
 }
 
 #
@@ -458,20 +497,37 @@ resource "aws_instance" "earth_spaceport" {
 
   tags = merge(local.common_tags, { Name = "total_recon/earth_spaceport" })
 
-  # connection {
-  #   bastion_host        = aws_instance.home.public_ip
-  #   bastion_port        = 22
-  #   host                = self.private_ip
-  #   port                = 666
-  #   user                = "ubuntu"
-  #   private_key         = tls_private_key.key.private_key_pem
-  # }
-  #
-  # provisioner "remote-exec" {
-  #   inline = [
-  #     "cloud-init status --wait --long",
-  #   ]
-  # }
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 666
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "file" {
+    source = "${path.module}/only_from"
+    destination = "/home/ubuntu/recon/only_from"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "sudo chmod +x only_from",
+      "sudo ./only_from",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
 }
 
 data "template_cloudinit_config" "mars_spaceport" {
@@ -499,16 +555,17 @@ data "template_cloudinit_config" "mars_spaceport" {
       packages = setunion(local.net_tools)
       hostname = "mars-spaceport"
       motd     = file("${path.module}/motd_mars_spaceport")
+      ip_addresses = [local.earth_spaceport_private_ip]
     })
   }
 
-  part {
-    filename     = "only_earth_spaceport"
-    content_type = "text/x-shellscript"
-    content = templatefile("${path.module}/only_from", {
-      ip_addresses: [local.earth_spaceport_private_ip]
-    })
-  }
+ # part {
+ #   filename     = "only_earth_spaceport"
+ #   content_type = "text/x-shellscript"
+ #   content = templatefile("${path.module}/only_from", {
+ #     ip_addresses: [local.earth_spaceport_private_ip]
+ #   })
+ # }
 }
 
 resource "aws_instance" "mars_spaceport" {
@@ -524,6 +581,37 @@ resource "aws_instance" "mars_spaceport" {
   user_data_base64            = data.template_cloudinit_config.mars_spaceport.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/mars_spaceport" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 22
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "file" {
+    source = "${path.module}/only_from"
+    destination = "/home/ubuntu/recon/only_from"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "sudo chmod +x only_from",
+      "sudo ./only_from",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
 }
 
 
@@ -552,6 +640,7 @@ data "template_cloudinit_config" "venusville" {
       packages = setunion(local.net_tools, ["bind9", "apache2"])
       hostname = "venusville"
       motd     = file("${path.module}/motd_venusville")
+      ip_addresses = [local.mars_spaceport_private_ip]
     })
   }
 
@@ -563,13 +652,13 @@ data "template_cloudinit_config" "venusville" {
     })
   }
 
-  part {
-    filename     = "only_mars_spaceport"
-    content_type = "text/x-shellscript"
-    content = templatefile("${path.module}/only_from", {
-      ip_addresses: [local.mars_spaceport_private_ip]
-    })
-  }
+ # part {
+ #   filename     = "only_mars_spaceport"
+ #   content_type = "text/x-shellscript"
+ #   content = templatefile("${path.module}/only_from", {
+ #     ip_addresses: [local.mars_spaceport_private_ip]
+ #   })
+ # }
 }
 
 resource "aws_instance" "venusville" {
@@ -585,6 +674,37 @@ resource "aws_instance" "venusville" {
   user_data_base64            = data.template_cloudinit_config.venusville.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/venusville" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 123
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "file" {
+    source = "${path.module}/only_from"
+    destination = "/home/ubuntu/recon/only_from"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "sudo chmod +x only_from",
+      "sudo ./only_from",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
 }
 
 data "template_cloudinit_config" "last_resort" {
@@ -609,8 +729,9 @@ data "template_cloudinit_config" "last_resort" {
     merge_type   = "list(append)+dict(recurse_list)"
     content = templatefile("${path.module}/cloud-init.yml", {
       players  = var.students
-      packages = ["nc"]
+      packages = []
       hostname = "last-resort"
+      ip_addresses = [local.venusville_private_ip]
       motd     = file("${path.module}/motd_last_resort")
     })
   }
@@ -623,13 +744,13 @@ data "template_cloudinit_config" "last_resort" {
     })
   }
 
-  part {
-    filename     = "only_venusville"
-    content_type = "text/x-shellscript"
-    content = templatefile("${path.module}/only_from", {
-      ip_addresses: [local.venusville_private_ip]
-    })
-  }
+  #part {
+  #  filename     = "only_venusville"
+  #  content_type = "text/x-shellscript"
+  #  content = templatefile("${path.module}/only_from", {
+  #    ip_addresses: [local.venusville_private_ip]
+  #  })
+  #}
 }
 
 resource "aws_instance" "last_resort" {
@@ -645,6 +766,37 @@ resource "aws_instance" "last_resort" {
   user_data_base64            = data.template_cloudinit_config.last_resort.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/last_resort" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 2345
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "file" {
+    source = "${path.module}/only_from"
+    destination = "/home/ubuntu/recon/only_from"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "sudo chmod +x only_from",
+      "sudo ./only_from",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
 }
 
 
@@ -674,7 +826,12 @@ data "template_cloudinit_config" "resistance_base" {
       hostname = "resistance-base"
       motd     = templatefile("${path.module}/motd_resistance_base",{
         resistance_base_private_ip = local.resistance_base_private_ip
-      })
+        })
+      ip_addresses = [local.home_private_ip,
+                      local.subway_private_ip,
+                      local.earth_spaceport_private_ip,
+                      local.mars_spaceport_private_ip,
+                      local.venusville_private_ip]
     })
   }
 
@@ -686,19 +843,19 @@ data "template_cloudinit_config" "resistance_base" {
     })
   }
 
-  part {
-    filename     = "drop_traffic"
-    content_type = "text/x-shellscript"
-    content = templatefile("${path.module}/drop_all_from", {
-      ip_addresses: [
-        local.home_private_ip,
-        local.subway_private_ip,
-        local.earth_spaceport_private_ip,
-        local.mars_spaceport_private_ip,
-        local.venusville_private_ip
-      ]
-    })
-  }
+  #part {
+  #  filename     = "drop_traffic"
+  #  content_type = "text/x-shellscript"
+  #  content = templatefile("${path.module}/drop_all_from", {
+  #    ip_addresses: [
+  #      local.home_private_ip,
+  #      local.subway_private_ip,
+  #      local.earth_spaceport_private_ip,
+  #      local.mars_spaceport_private_ip,
+  #      local.venusville_private_ip
+  #    ]
+  #  })
+  #}
 
   part {
     filename     = "nmap_to_sudoers"
@@ -723,6 +880,37 @@ resource "aws_instance" "resistance_base" {
   user_data_base64            = data.template_cloudinit_config.resistance_base.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/resistance_base" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 632
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "file" {
+    source = "${path.module}/drop_all_from"
+    destination = "/home/ubuntu/recon/drop_all_from"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "sudo chmod +x drop_all_from",
+      "sudo ./drop_all_from",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
 }
 
 data "template_cloudinit_config" "stealth_xmas" {
@@ -763,4 +951,30 @@ resource "aws_instance" "stealth_xmas" {
   user_data_base64            = data.template_cloudinit_config.stealth_xmas.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/stealth_xmas" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 444
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
 }
+

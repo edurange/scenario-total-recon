@@ -1,4 +1,4 @@
 #!/bin/bash
-%{ for ip in ip_addresses ~}
-iptables -A INPUT -s ${ip} -j DROP
-%{ endfor ~}
+while read ip; do
+  iptables -A INPUT -s $ip -j DROP
+done </tmp/addr

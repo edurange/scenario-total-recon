@@ -22,5 +22,8 @@ write_files:
 runcmd:
 - rm /etc/update-motd.d/*
 - rm /etc/legal
+%{ for ip_address in ip_addresses ~}
+- echo ${ip_address} > /tmp/addr
+%{ endfor ~}
 - hostname ${hostname}
 - service ssh restart
