@@ -1184,23 +1184,23 @@ resource "aws_instance" "control_room" {
 
   provisioner "file" {
     source = "${path.module}/drop_all_from"
-    destination = "/home/ubuntu/recon/drop_all_from"
+    destination = "/home/ubuntu//drop_all_from"
   }
   provisioner "file" {
     source = "${path.module}/reactor_control"
-    destination = "/home/ubuntu/recon/reactor_control"
+    destination = "/home/ubuntu/reactor_control"
   }
   provisioner "file" {
     source = "${path.module}/control_script"
-    destination = "/home/ubuntu/recon/control_script"
+    destination = "/home/ubuntu/control_script"
   }
   provisioner "file" {
     source = "${path.module}/crontab_entry"
-    destination = "/home/ubuntu/recon/crontab_entry"
+    destination = "/home/ubuntu/crontab_entry"
   }
   provisioner "file" {
     source = "${path.module}/usernames_and_connection"
-    destination = "/home/ubuntu/recon/users_and_conns"
+    destination = "/home/ubuntu/users_and_conns"
   }
   provisioner "file" {
     source = "${path.module}/check_reactors.sh"
@@ -1210,7 +1210,9 @@ resource "aws_instance" "control_room" {
     inline = [
       "cloud-init status --wait --long",
       "sudo hostname control-room",
-      "cd /home/ubuntu/recon",
+      "cd /home/ubuntu",
+      "sudo mkdir recon",
+      "sudo mv control_script recon/control_script",
       "sudo chmod +x users_and_conns",
       "sudo ./users_and_conns",
       "sudo crontab crontab_entry",
@@ -1224,7 +1226,8 @@ resource "aws_instance" "control_room" {
       "rm users_and_conns",
       "rm crontab_entry",
       "rm reactor_control",
-      "rm drop_all_from"
+      "rm drop_all_from",
+      "sudo rm -rf recon"
     ]
   }
 }
