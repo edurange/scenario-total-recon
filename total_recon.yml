@@ -127,7 +127,7 @@ Scoring:
   Options:
   - ignore-case
   Values:
-  - Value: xmas tree
+  - Value: xmas
     Points: '10'
   Order: 11
   Points: 10
@@ -167,7 +167,7 @@ Scoring:
   - accept-integer
   - accept-decimal
   Values:
-  - Value: '10'
+  - Value: '9'
     Points: '10'
   Order: 15
   Points: 10
