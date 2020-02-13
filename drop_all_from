@@ -1,4 +1,4 @@
 #!/bin/bash
 while read ip; do
   iptables -A INPUT -s $ip -j DROP
-done </tmp/addr
+done </usr/local/src/addr

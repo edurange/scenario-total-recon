@@ -39,6 +39,7 @@ while read line; do
 	echo "$line ALL=(ALL) NOPASSWD: /usr/bin/python3.4 /usr/local/src/analyze.py /usr/local/src/logs/alltty.$(hostname)* /usr/local/src/logs/cli.$(hostname)*" | sudo EDITOR='tee -a' visudo
 done</usr/local/src/user_names.txt
 
+echo 'ClientAliveInterval 60' | sudo tee --append /etc/ssh/sshd_config
 
 if grep -q "ForceCommand /usr/local/src/ttylog/start_ttylog.sh" /etc/ssh/sshd_config; then
 	:
@@ -46,12 +47,10 @@ else
 	echo "ForceCommand /usr/local/src/ttylog/start_ttylog.sh" >> /etc/ssh/sshd_config
 fi
 
-systemctl restart sshd
-
 echo 'if [[ -n $SSH_CONNECTION ]] ; then' >> /etc/bash.bashrc
 echo "	perl /usr/local/src/ttylog/analyze_cyclic.pl &" >> /etc/bash.bashrc
 echo "  cat /etc/motd" >> /etc/bash.bashrc
 echo "fi" >> /etc/bash.bashrc
 
-
+systemctl restart sshd
 

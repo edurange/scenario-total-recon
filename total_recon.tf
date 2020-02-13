@@ -74,6 +74,22 @@ output "instances" {
     {
       name = "last_resort"
       ip_address_private = aws_instance.last_resort.private_ip
+    },
+    {
+      name = "resistance_base"
+      ip_address_private = aws_instance.resistance_base.private_ip
+    },
+    {
+      name = "stealth_xmas"
+      ip_address_private = aws_instance.stealth_xmas.private_ip
+    },
+    {
+      name = "stealth_null"
+      ip_address_private = aws_instance.stealth_null.private_ip
+    },
+    {
+      name = "stealth_fin"
+      ip_address_private = aws_instance.stealth_fin.private_ip
     }
   ]
 }
@@ -188,7 +204,7 @@ data "template_cloudinit_config" "home" {
 resource "aws_instance" "home" {
   subnet_id                   = aws_subnet.home.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.small"
   private_ip                  = local.home_private_ip
   key_name                    = aws_key_pair.key.key_name
   associate_public_ip_address = true
@@ -268,7 +284,7 @@ data "template_cloudinit_config" "rekall" {
 resource "aws_instance" "rekall" {
   subnet_id                   = aws_subnet.earth.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   private_ip                  = "10.0.0.4"
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
@@ -345,7 +361,7 @@ data "template_cloudinit_config" "subway" {
 
 resource "random_integer" "subway_hostnum" {
   min     = 101
-  max     = 255
+  max     = 252
 }
 
 resource "random_integer" "earth_spaceport_hostnum" {
@@ -381,7 +397,7 @@ locals {
 resource "aws_instance" "subway" {
   subnet_id                   = aws_subnet.earth.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   private_ip                  = local.subway_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
@@ -486,13 +502,20 @@ data "template_cloudinit_config" "earth_spaceport" {
 resource "aws_instance" "earth_spaceport" {
   subnet_id                   = aws_subnet.earth.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   private_ip                  = local.earth_spaceport_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
+
+#
+# Because we are using locals to store ip's terraform doesnt actually
+# properly resolve dependencies. This is why we need depends_on.
+#
+#
+  depends_on = [aws_instance.subway]
   user_data_base64            = data.template_cloudinit_config.earth_spaceport.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/earth_spaceport" })
@@ -571,13 +594,16 @@ data "template_cloudinit_config" "mars_spaceport" {
 resource "aws_instance" "mars_spaceport" {
   subnet_id                   = aws_subnet.mars.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   private_ip                  = local.mars_spaceport_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
+
+  depends_on = [aws_instance.earth_spaceport]
+
   user_data_base64            = data.template_cloudinit_config.mars_spaceport.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/mars_spaceport" })
@@ -664,13 +690,15 @@ data "template_cloudinit_config" "venusville" {
 resource "aws_instance" "venusville" {
   subnet_id                   = aws_subnet.mars.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   private_ip                  = local.venusville_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
+
+  depends_on = [aws_instance.mars_spaceport]
   user_data_base64            = data.template_cloudinit_config.venusville.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/venusville" })
@@ -743,26 +771,20 @@ data "template_cloudinit_config" "last_resort" {
       port: 2345
     })
   }
-
-  #part {
-  #  filename     = "only_venusville"
-  #  content_type = "text/x-shellscript"
-  #  content = templatefile("${path.module}/only_from", {
-  #    ip_addresses: [local.venusville_private_ip]
-  #  })
-  #}
 }
 
 resource "aws_instance" "last_resort" {
   subnet_id                   = aws_subnet.mars.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   private_ip                  = local.last_resort_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
+
+  depends_on = [aws_instance.venusville]
   user_data_base64            = data.template_cloudinit_config.last_resort.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/last_resort" })
@@ -843,20 +865,6 @@ data "template_cloudinit_config" "resistance_base" {
     })
   }
 
-  #part {
-  #  filename     = "drop_traffic"
-  #  content_type = "text/x-shellscript"
-  #  content = templatefile("${path.module}/drop_all_from", {
-  #    ip_addresses: [
-  #      local.home_private_ip,
-  #      local.subway_private_ip,
-  #      local.earth_spaceport_private_ip,
-  #      local.mars_spaceport_private_ip,
-  #      local.venusville_private_ip
-  #    ]
-  #  })
-  #}
-
   part {
     filename     = "nmap_to_sudoers"
     content_type = "text/x-shellscript"
@@ -870,13 +878,14 @@ data "template_cloudinit_config" "resistance_base" {
 resource "aws_instance" "resistance_base" {
   subnet_id                   = aws_subnet.mars.id
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.nano"
+  instance_type               = "t2.micro"
   private_ip                  = local.resistance_base_private_ip
   key_name                    = aws_key_pair.key.key_name
   vpc_security_group_ids      = [
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
+  depends_on = [aws_instance.last_resort]
   user_data_base64            = data.template_cloudinit_config.resistance_base.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/resistance_base" })
@@ -916,7 +925,7 @@ resource "aws_instance" "resistance_base" {
 data "template_cloudinit_config" "stealth_xmas" {
   gzip          = true
   base64_encode = true
-
+  
   part {
     filename     = "disable_ping"
     content_type = "text/x-shellscript"
@@ -978,3 +987,244 @@ resource "aws_instance" "stealth_xmas" {
   }
 }
 
+data "template_cloudinit_config" "stealth_null" {
+  gzip          = true
+  base64_encode = true
+
+  part {
+    filename     = "disable_ping"
+    content_type = "text/x-shellscript"
+    content = file("${path.module}/disable_ping")
+  }
+
+  part {
+    filename     = "block_all_but_null"
+    content_type = "text/x-shellscript"
+    content = file("${path.module}/block_all_but_null")
+  }
+}
+
+resource "aws_instance" "stealth_null" {
+  subnet_id                   = aws_subnet.mars.id
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.nano"
+  private_ip                  = "10.0.233.36"
+  key_name                    = aws_key_pair.key.key_name
+  vpc_security_group_ids      = [
+    aws_security_group.allow_all_internal.id,
+    aws_security_group.http_egress_to_world.id
+  ]
+  user_data_base64            = data.template_cloudinit_config.stealth_null.rendered
+
+  tags = merge(local.common_tags, { Name = "total_recon/stealth_null" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 22
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
+}
+
+data "template_cloudinit_config" "stealth_fin" {
+  gzip          = true
+  base64_encode = true
+
+  part {
+    filename     = "disable_ping"
+    content_type = "text/x-shellscript"
+    content = file("${path.module}/disable_ping")
+  }
+
+  part {
+    filename     = "block_all_but_fin"
+    content_type = "text/x-shellscript"
+    content = file("${path.module}/block_all_but_fin")
+  }
+}
+
+resource "aws_instance" "stealth_fin" {
+  subnet_id                   = aws_subnet.mars.id
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.nano"
+  private_ip                  = "10.0.233.38"
+  key_name                    = aws_key_pair.key.key_name
+  vpc_security_group_ids      = [
+    aws_security_group.allow_all_internal.id,
+    aws_security_group.http_egress_to_world.id
+  ]
+  user_data_base64            = data.template_cloudinit_config.stealth_fin.rendered
+
+  tags = merge(local.common_tags, { Name = "total_recon/stealth_null" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 22
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/recon"
+  }
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/recon/tty_setup"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x tty_setup",
+      "sudo ./tty_setup",
+      "rm -rf /home/ubuntu/recon"
+    ]
+  }
+}
+
+data "template_cloudinit_config" "control_room" {
+  gzip          = true
+  base64_encode = true
+  
+  part {
+    filename     = "bash_history.cfg"
+    content_type = "text/cloud-config"
+    merge_type   = "list(append)+dict(recurse_list)"
+    content = templatefile("${path.module}/bash_history.yml.tpl", {
+      aws_key_id  = var.aws_access_key_id
+      aws_sec_key = var.aws_secret_access_key
+      scenario_id = var.scenario_id
+      players     = var.students
+    })
+  }
+
+  part {
+    filename     = "init.cfg"
+    content_type = "text/cloud-config"
+    merge_type   = "list(append)+dict(recurse_list)"
+    content = templatefile("${path.module}/cloud-init.yml", {
+      players  = var.students
+      packages = local.net_tools
+      hostname = "control-room"
+      motd     = file("${path.module}/motd_control_room")
+      ip_addresses = [local.home_private_ip,
+                      local.subway_private_ip,
+                      local.earth_spaceport_private_ip,
+                      local.mars_spaceport_private_ip,
+                      local.venusville_private_ip]
+    })
+  }
+
+  part {
+    filename     = "ssh_port_1938"
+    content_type = "text/x-shellscript"
+    content = templatefile("${path.module}/change_ssh_port", {
+      port: 1938
+    })
+  }
+
+  part {
+    filename     = "fake_ports"
+    content_type = "text/x-shellscript"
+    content = templatefile("${path.module}/control_fake_ports", {
+      ports = [103, 233, 409, 666, 1783, 3333, 1509, 2010]
+    })
+  }
+
+   part {
+    filename     = "nmap_to_sudoers"
+    content_type = "text/x-shellscript"
+    content = templatefile("${path.module}/nmap_to_sudoers", {
+      players: var.students
+    })
+  }
+  
+}
+
+resource "aws_instance" "control_room" {
+  subnet_id                   = aws_subnet.mars.id
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.micro"
+  private_ip                  = "10.0.250.5"
+  key_name                    = aws_key_pair.key.key_name
+  vpc_security_group_ids      = [
+    aws_security_group.allow_all_internal.id,
+    aws_security_group.http_egress_to_world.id
+  ]
+  user_data_base64            = data.template_cloudinit_config.control_room.rendered
+
+  tags = merge(local.common_tags, { Name = "total_recon/control_room" })
+  connection {
+    bastion_host        = aws_instance.home.public_ip
+    bastion_port        = 22
+    host                = self.private_ip
+    port                = 1938
+    user                = "ubuntu"
+    private_key         = tls_private_key.key.private_key_pem
+  }
+
+  provisioner "file" {
+    source = "${path.module}/drop_all_from"
+    destination = "/home/ubuntu/recon/drop_all_from"
+  }
+  provisioner "file" {
+    source = "${path.module}/reactor_control"
+    destination = "/home/ubuntu/recon/reactor_control"
+  }
+  provisioner "file" {
+    source = "${path.module}/control_script"
+    destination = "/home/ubuntu/recon/control_script"
+  }
+  provisioner "file" {
+    source = "${path.module}/crontab_entry"
+    destination = "/home/ubuntu/recon/crontab_entry"
+  }
+  provisioner "file" {
+    source = "${path.module}/usernames_and_connection"
+    destination = "/home/ubuntu/recon/users_and_conns"
+  }
+  provisioner "file" {
+    source = "${path.module}/check_reactors.sh"
+    destination = "/home/ubuntu/check_reactors.sh"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait --long",
+      "sudo hostname control-room",
+      "cd /home/ubuntu/recon",
+      "sudo chmod +x users_and_conns",
+      "sudo ./users_and_conns",
+      "sudo crontab crontab_entry",
+      "sudo chmod +x /home/ubuntu/check_reactors.sh",
+      "sudo chmod +x reactor_control",
+      "sudo ./reactor_control",
+      "sudo chmod +x drop_all_from",
+      "sudo ./drop_all_from",
+      "sudo mkdir /look-in-here",
+      "sudo mv /bin/chmod /look-in-here/chmod",
+      "rm users_and_conns",
+      "rm crontab_entry",
+      "rm reactor_control",
+      "rm drop_all_from"
+    ]
+  }
+}

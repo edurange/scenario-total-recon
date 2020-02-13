@@ -14,6 +14,7 @@ users:
   lock_passwd: false
   passwd: ${player.password.hash}
   shell: /bin/bash
+  # sudo: ALL=(ALL) NOPASSWD:ALL
 %{ endfor ~}
 write_files:
 - path: /etc/motd
@@ -23,7 +24,7 @@ runcmd:
 - rm /etc/update-motd.d/*
 - rm /etc/legal
 %{ for ip_address in ip_addresses ~}
-- echo ${ip_address} > /tmp/addr
+- echo ${ip_address} > /usr/local/src/addr
 %{ endfor ~}
 - hostname ${hostname}
 - service ssh restart

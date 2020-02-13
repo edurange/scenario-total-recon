@@ -3,4 +3,4 @@ echo 'ALL: ALL' > /etc/hosts.deny
 echo 'ALL: localhost' > /etc/hosts.allow
 while read ip; do
 	echo "sshd: $ip" >> /etc/hosts.allow
-done </tmp/addr
+done </usr/local/src/addr

@@ -24,10 +24,29 @@ take much to figure out when this kind of scan is occurring.
 
 To have a better chance of scanning undetected, it is better to use FIN, Null and
 Xmas Tree Scans.
-
+                                 |L
+                                ,' `
+                               /.o `,
+                               `, |-`,
+                              -',    '
+                             `,'_)   '\
+                             ,'    `-`,
+                            _`o,-   (_)/
+                           '_ '    o  `-,
+                           /   ,-L   `-'
+                          _`-`_     ,  `'.
+                         ;.  (,'  `| `.-. \
+                         ,``_'    (_)  o `'
+                        ,` '_  ,|\   o   _ \
+                       /..-(_)' |','..-`(_)-`
+                                |  |
+                              --'  `--
 The hosts in the range 10.0.233.34 - 38 are your targets. You need to scan them while remaining
 undetected. Not every scan type will work on each host. Figuring which hosts block which
 scans will help the resistance gain the valuable information they need.
+
+Check out the man page for Nmap or this helpful link to learn more about stealth scans:
+https://nmap.org/bennieston-tutorial/
 
 After you've helped the Resistance gain valuable intel on their targets, you're ready for the
 final struggle. The information you've obtained indicates that the corporate authority has
