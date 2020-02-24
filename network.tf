@@ -26,7 +26,7 @@ resource "aws_internet_gateway" "total_recon" {
 
 resource "aws_subnet" "home" {
   vpc_id     = aws_vpc.total_recon.id
-  cidr_block = "10.0.129.0/24"
+  cidr_block = "10.0.129.0/18"
   tags = merge(local.common_tags, { Name = "total_recon/nat" })
 }
 

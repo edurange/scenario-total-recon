@@ -2,5 +2,5 @@
 echo 'ALL: ALL' > /etc/hosts.deny
 echo 'ALL: localhost' > /etc/hosts.allow
 while read ip; do
-	echo "sshd: $ip" >> /etc/hosts.allow
+	echo -e "sshd: $ip" | sudo tee --append  /etc/hosts.allow
 done </usr/local/src/addr

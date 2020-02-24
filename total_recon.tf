@@ -460,7 +460,7 @@ data "template_cloudinit_config" "earth_spaceport" {
       packages = setunion(local.net_tools)
       hostname = "earth-spaceport"
       motd     = file("${path.module}/motd_earth_spaceport")
-      ip_addresses = [local.subway_private_ip]
+      ip_addresses = [local.subway_private_ip, local.home_private_ip]
     })
   }
 
@@ -515,7 +515,6 @@ resource "aws_instance" "earth_spaceport" {
 # properly resolve dependencies. This is why we need depends_on.
 #
 #
-  depends_on = [aws_instance.subway]
   user_data_base64            = data.template_cloudinit_config.earth_spaceport.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/earth_spaceport" })
@@ -545,9 +544,9 @@ resource "aws_instance" "earth_spaceport" {
       "cloud-init status --wait --long",
       "cd /home/ubuntu/recon",
       "sudo chmod +x tty_setup",
-      "sudo ./tty_setup",
       "sudo chmod +x only_from",
       "sudo ./only_from",
+      "sudo ./tty_setup",
       "rm -rf /home/ubuntu/recon"
     ]
   }
@@ -578,17 +577,9 @@ data "template_cloudinit_config" "mars_spaceport" {
       packages = setunion(local.net_tools)
       hostname = "mars-spaceport"
       motd     = file("${path.module}/motd_mars_spaceport")
-      ip_addresses = [local.earth_spaceport_private_ip]
+      ip_addresses = [local.earth_spaceport_private_ip, local.home_private_ip]
     })
   }
-
- # part {
- #   filename     = "only_earth_spaceport"
- #   content_type = "text/x-shellscript"
- #   content = templatefile("${path.module}/only_from", {
- #     ip_addresses: [local.earth_spaceport_private_ip]
- #   })
- # }
 }
 
 resource "aws_instance" "mars_spaceport" {
@@ -601,8 +592,6 @@ resource "aws_instance" "mars_spaceport" {
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
-
-  depends_on = [aws_instance.earth_spaceport]
 
   user_data_base64            = data.template_cloudinit_config.mars_spaceport.rendered
 
@@ -666,7 +655,7 @@ data "template_cloudinit_config" "venusville" {
       packages = setunion(local.net_tools, ["bind9", "apache2"])
       hostname = "venusville"
       motd     = file("${path.module}/motd_venusville")
-      ip_addresses = [local.mars_spaceport_private_ip]
+      ip_addresses = [local.mars_spaceport_private_ip, local.home_private_ip]
     })
   }
 
@@ -677,14 +666,6 @@ data "template_cloudinit_config" "venusville" {
       port: 123
     })
   }
-
- # part {
- #   filename     = "only_mars_spaceport"
- #   content_type = "text/x-shellscript"
- #   content = templatefile("${path.module}/only_from", {
- #     ip_addresses: [local.mars_spaceport_private_ip]
- #   })
- # }
 }
 
 resource "aws_instance" "venusville" {
@@ -698,7 +679,6 @@ resource "aws_instance" "venusville" {
     aws_security_group.http_egress_to_world.id
   ]
 
-  depends_on = [aws_instance.mars_spaceport]
   user_data_base64            = data.template_cloudinit_config.venusville.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/venusville" })
@@ -727,9 +707,9 @@ resource "aws_instance" "venusville" {
       "cloud-init status --wait --long",
       "cd /home/ubuntu/recon",
       "sudo chmod +x tty_setup",
-      "sudo ./tty_setup",
       "sudo chmod +x only_from",
       "sudo ./only_from",
+      "sudo ./tty_setup",
       "rm -rf /home/ubuntu/recon"
     ]
   }
@@ -759,7 +739,7 @@ data "template_cloudinit_config" "last_resort" {
       players  = var.students
       packages = []
       hostname = "last-resort"
-      ip_addresses = [local.venusville_private_ip]
+      ip_addresses = [local.venusville_private_ip, local.home_private_ip]
       motd     = file("${path.module}/motd_last_resort")
     })
   }
@@ -784,7 +764,6 @@ resource "aws_instance" "last_resort" {
     aws_security_group.http_egress_to_world.id
   ]
 
-  depends_on = [aws_instance.venusville]
   user_data_base64            = data.template_cloudinit_config.last_resort.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/last_resort" })
@@ -849,8 +828,7 @@ data "template_cloudinit_config" "resistance_base" {
       motd     = templatefile("${path.module}/motd_resistance_base",{
         resistance_base_private_ip = local.resistance_base_private_ip
         })
-      ip_addresses = [local.home_private_ip,
-                      local.subway_private_ip,
+      ip_addresses = [local.subway_private_ip,
                       local.earth_spaceport_private_ip,
                       local.mars_spaceport_private_ip,
                       local.venusville_private_ip]
@@ -885,7 +863,6 @@ resource "aws_instance" "resistance_base" {
     aws_security_group.allow_all_internal.id,
     aws_security_group.http_egress_to_world.id
   ]
-  depends_on = [aws_instance.last_resort]
   user_data_base64            = data.template_cloudinit_config.resistance_base.rendered
 
   tags = merge(local.common_tags, { Name = "total_recon/resistance_base" })
@@ -1126,8 +1103,7 @@ data "template_cloudinit_config" "control_room" {
       packages = local.net_tools
       hostname = "control-room"
       motd     = file("${path.module}/motd_control_room")
-      ip_addresses = [local.home_private_ip,
-                      local.subway_private_ip,
+      ip_addresses = [local.subway_private_ip,
                       local.earth_spaceport_private_ip,
                       local.mars_spaceport_private_ip,
                       local.venusville_private_ip]
