@@ -98,7 +98,7 @@ locals {
   common_tags = {
     scenario_id   = var.scenario_id
     scenario_name = "total_recon"
-    env           = "development"
+    env           = var.env
     owner         = var.owner
     Name          = "total_recon" # By default tag every resource with total_recon, but this can be overwritten if that is not specific enough (eg there are more than one of that resource)
   }
@@ -107,7 +107,7 @@ locals {
 provider "aws" {
   version    = "~> 2"
   profile    = "default"
-  region     = var.aws_region
+  region     = "us-west-1"
   access_key = var.aws_access_key_id
   secret_key = var.aws_secret_access_key
 }
